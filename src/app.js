@@ -7,9 +7,9 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const session = require('koa-generic-session');
 const redisStore = require('koa-redis');
-
-const index = require('./routes/index')
-const users = require('./routes/users')
+const userViewRoutes = require('./routes/view/user');
+const blogViewRoutes = require('./routes/view/blog');
+const userApiRoutes = require('./routes/api/user');
 
 const REDIS_CONFIG = require('./conf/redis');
 const { COOKIE_SECRET } = require('./constant/security');
@@ -35,7 +35,7 @@ app.keys = [COOKIE_SECRET];
 // 处理 session
 app.use(session({
   cookie: {
-    path: "/",
+    path: '/',
     httpOnly: true,
     maxAge: 24 * 60 * 60
   },
@@ -47,8 +47,9 @@ app.use(session({
 }))
 
 // routes
-app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+app.use(userViewRoutes.routes(), userViewRoutes.allowedMethods());
+app.use(blogViewRoutes.routes(), blogViewRoutes.allowedMethods());
+app.use(userApiRoutes.routes(), userApiRoutes.allowedMethods());
 
 // error-handling
 app.on('error', (err, ctx) => {
