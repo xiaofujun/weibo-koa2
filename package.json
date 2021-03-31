@@ -1,0 +1,39 @@
+{
+  "name": "weibo-koa2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/bin/www",
+    "dev": "cross-env NODE_ENV=dev PORT=8081 ./node_modules/.bin/nodemon src/bin/www",
+    "prd": "cross-env NODE_ENV=production PORT=8082 pm2 start src/bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:eslint": "eslint src/"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "ejs": "~2.3.3",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-convert": "^1.2.0",
+    "koa-generic-session": "^2.1.1",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.0",
+    "koa-onerror": "^4.1.0",
+    "koa-redis": "^4.0.1",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^6.2.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "cross-env": "^7.0.3",
+    "eslint": "^4.19.1",
+    "nodemon": "^1.19.4",
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit": {
+    "run": "test:eslint"
+  }
+}
