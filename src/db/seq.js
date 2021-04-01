@@ -9,7 +9,7 @@ const { host, port, database, account, password } = require('../conf/db');
 const conf = {
   host,
   port,
-  dialect: 'mysql'
+  dialect: 'mysql',
 }
 
 // 创建连接实例

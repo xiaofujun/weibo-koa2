@@ -3,29 +3,111 @@
   isNarrow: true
 }) %>
 
-<form>
+<form name="registryForm" class="needs-validation">
   <div class="form-group">
-    <h3>欢迎注册君书账号</h3>
+    <h3>欢迎注册君书</h3>
   </div>
   <div class="form-group">
-    <input type="email" class="form-control" id="username" placeholder="用户名">
+    <input type="text" class="form-control" id="username" placeholder="用户名">
+    <div class="valid-feedback">
+      用户名可用
+    </div>
+    <div class="invalid-feedback">
+      用户名已被注册
+    </div>
   </div>
   <div class="form-group">
     <input type="password" class="form-control" id="password" placeholder="密码">
   </div>
   <div class="form-group">
     <input type="password" class="form-control" id="confirmPassword" placeholder="确认密码">
+    <div class="valid-feedback">
+      确认密码成功
+    </div>
+    <div class="invalid-feedback">
+      两次输入的密码不一致
+    </div>
   </div>
   <div class="form-group">
-    <select class="form-control" placeholder="性别">
-      <option value="" selected disabled style="display: none;">性别</option>
+    <select id="gender" class="form-control">
       <option value="1">女</option>
       <option value="2">男</option>
-      <option value="3">保密</option>
+      <option value="3" selected>保密</option>
     </select>
   </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-primary">注册</button>
+    <button id="registryBtn" type="submit" class="btn btn-primary">注册</button>
     <small class="text-muted">已有账号，去<a href="/login">登录</a></small>
   </div>
 </form>
+
+<script>
+  var userNameDom = $('#username');
+  var password = $('#password');
+  var confirmPasswordDom = $('#confirmPassword');
+  var gender = $('#gender');
+
+  // 判断 username 是否已被注册
+  userNameDom.change(checkUserNameUnique);
+  // 判断 password 两次输入是否一致
+  password.change(checkPasswordConfirm);
+  confirmPasswordDom.change(checkPasswordConfirm);
+  // 点击提交按钮
+  $('#registryBtn').click(handleSubmitForm);
+
+  // 判断两次输入的密码是否相同
+  function checkPasswordConfirm(e) {
+    const value1 = password.val();
+    const value2 = confirmPasswordDom.val();
+
+    if(value1 && value2) {
+      if(value1 === value2) {
+        confirmPasswordDom.removeClass('is-invalid');
+        confirmPasswordDom.addClass('is-valid');
+      } else {
+        confirmPasswordDom.removeClass('is-valid');
+        confirmPasswordDom.addClass('is-invalid');
+      }
+    }
+  }
+
+  // 调用接口判断用户名是否已注册
+  function checkUserNameUnique(e) {
+    const value = e.target.value && e.target.value.trim();
+    if(!value) {
+      return;
+    }
+
+    WB.get('/api/user/isExist', { userName: value })
+      .then(data => {
+        if(data.errno === '0') {
+          userNameDom.removeClass('is-valid');
+          userNameDom.addClass('is-invalid');
+        } else {
+          userNameDom.removeClass('is-invalid');
+          userNameDom.addClass('is-valid');
+        }
+      });
+  }
+
+  // 提交 form 表单数据
+  function handleSubmitForm(e) {
+    e.preventDefault();
+    // 判断用户名是否已存在
+    if(userNameDom.hasClass('is-invalid') || confirmPasswordDom.hasClass('is-invalid')) {
+      return;
+    }
+
+    WB.post('/api/user/registry', {
+      userName: userNameDom.val(),
+      password: password.val(),
+      gender: gender.val()
+    }).then(result => {
+      if(result.errno === '0') {
+        location.href = '/login';
+      } else {
+        alert(result.message);
+      }
+    });
+  }
+</script>

@@ -4,8 +4,9 @@
  */
 
 const router = require('koa-router')();
+const { viewCheckLoginMiddleWare } = require('../../middleware/checkLogin');
 
-router.get('/', async (ctx, next) => {
+router.get('/', viewCheckLoginMiddleWare, async (ctx, next) => {
   await ctx.render('blog/list');
 })
 

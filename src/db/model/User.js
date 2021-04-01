@@ -10,6 +10,7 @@ const { STRING, DECIMAL } = require('../../constant/types');
 const User = sequelize.define('user', {
   userName: {
     type: STRING,
+    unique: true,
     allowNull: false
   },
   password: {
