@@ -23,5 +23,9 @@ module.exports = {
   userNotLoginMessage: {
     errno: '10005',
     message: '用户未登录'
+  },
+  jsonSchemaValidateFail: {
+    errno: '1006',
+    message: '用户输入的数据格式不合法'
   }
 }

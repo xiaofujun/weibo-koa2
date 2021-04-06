@@ -4,7 +4,7 @@
  */
 
 const sequelize = require('../seq');
-const { STRING, TEXT } = require('../../constant/types');
+const { STRING, TEXT } = require('../types');
 
 const Blog = sequelize.define('blog', {
   title: {

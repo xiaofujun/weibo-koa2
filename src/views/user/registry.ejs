@@ -101,7 +101,7 @@
     WB.post('/api/user/registry', {
       userName: userNameDom.val(),
       password: password.val(),
-      gender: gender.val()
+      gender: parseInt(gender.val()) 
     }).then(result => {
       if(result.errno === '0') {
         location.href = '/login';

@@ -21,7 +21,7 @@
         if(XMLHttpRequest) {
             xhr = new XMLHttpRequest();
         } else {
-            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            xhr = new ActiveXObject('Microsoft.XMLHTTP');
         }
     
         if(xhr) {

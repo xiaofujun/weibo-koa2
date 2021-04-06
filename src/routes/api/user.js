@@ -5,6 +5,8 @@
 
 const router = require('koa-router')();
 const { isExist, registryUser, userLogin } = require('../../controller/user');
+const checkUserInfoJSON = require('../../util/checkJSON/checkUserInfoJSON');
+const validateJSON = require('../../middleware/validateJSON');
 
 router.prefix('/api/user');
 
@@ -15,7 +17,7 @@ router.get('/isExist', async (ctx, next) => {
 })
 
 // 注册用户
-router.post('/registry', async (ctx, next) => {
+router.post('/registry', validateJSON(checkUserInfoJSON), async (ctx, next) => {
   // 1. 校验提交的数据是否符合需求 json schema
   ctx.body = await registryUser(ctx.request.body);
 })

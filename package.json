@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node src/bin/www",
-    "dev": "cross-env NODE_ENV=dev PORT=8081 ./node_modules/.bin/nodemon src/bin/www",
+    "dev": "cross-env NODE_ENV=dev PORT=8081 ./node_modules/.bin/nodemon --inspect=9229 src/bin/www",
     "prd": "cross-env NODE_ENV=production PORT=8082 pm2 start src/bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:eslint": "eslint src/"
   },
   "dependencies": {
+    "ajv": "^8.0.5",
     "debug": "^4.1.1",
     "ejs": "~2.3.3",
     "koa": "^2.7.0",

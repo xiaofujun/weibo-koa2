@@ -4,7 +4,7 @@
  */
 
 const sequelize = require('../seq');
-const { STRING, DECIMAL } = require('../../constant/types');
+const { STRING, DECIMAL } = require('../types');
 
 // 创建 user 模型，同步后到数据库是 users
 const User = sequelize.define('user', {
